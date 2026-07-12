@@ -12,6 +12,7 @@ jobs:
   release:
     name: Build and publish macOS release
     runs-on: macos-latest
+    timeout-minutes: 30
 
     steps:
       - name: Check out source
@@ -95,11 +96,13 @@ jobs:
           security list-keychains -d user -s "$KEYCHAIN"
 
           # generate_appcast reads all *.zip archives from a directory and
-          # writes appcast.xml + deltas back into it.
+          # writes appcast.xml + deltas back into it. Use the CocoaPods build
+          # (universal arm64+x86_64); the committed Sparkle/generate_appcast is
+          # an older single-arch binary that hangs on the CI runner.
           mkdir -p Sparkle/updates
           cp "$archive" Sparkle/updates/
 
-          ./Sparkle/generate_appcast \
+          iGlance/Pods/Sparkle/bin/generate_appcast \
             Sparkle/updates
 
           # Commit the regenerated appcast + deltas so SUFeedURL serves them.
