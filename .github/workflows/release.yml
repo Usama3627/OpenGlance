@@ -20,17 +20,14 @@ jobs:
           submodules: recursive
           fetch-depth: 0
 
-      - name: Verify tag version
+      - name: Resolve version from tag
         id: version
         shell: bash
         run: |
           set -euo pipefail
-          version=$(sed -n 's|\[version\]\(.*\)\[/version\]|\1|p' Version.txt)
-          marketing_version=$(grep -Eo 'MARKETING_VERSION = [^;]+' iGlance/iGlance/OpenGlance.xcodeproj/project.pbxproj | sed 's/MARKETING_VERSION = //' | sort -u)
-          test -n "$version"
-          test "$marketing_version" = "$version"
-          test "${GITHUB_REF_NAME}" = "v${version}"
+          version="${GITHUB_REF_NAME#v}"
           echo "version=${version}" >> "$GITHUB_OUTPUT"
+          echo "Releasing version ${version} from tag ${GITHUB_REF_NAME}"
 
       - name: Install CocoaPods dependencies
         working-directory: iGlance

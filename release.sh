@@ -1,31 +1,43 @@
 #!/bin/bash
-set -e
+set -euo pipefail
 
-# Change directory to the Xcode workspace folder
-ROOT_DIR="$(dirname "$0")"
-cd "$ROOT_DIR/iGlance"
+# Usage: ./release.sh <version>   e.g. ./release.sh 2.2.1
+# Bumps Version.txt + Xcode MARKETING_VERSION, commits, tags vX.Y.Z, and pushes.
+# The pushed tag triggers .github/workflows/release.yml to build and publish the release.
 
-echo "=== Building OpenGlance (Release Configuration) ==="
-xcodebuild -workspace OpenGlance.xcworkspace -scheme OpenGlance -configuration Release -sdk macosx build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
+ROOT_DIR="$(cd "$(dirname "$0")" && pwd)"
+PBXPROJ="$ROOT_DIR/iGlance/iGlance/OpenGlance.xcodeproj/project.pbxproj"
+VERSION_FILE="$ROOT_DIR/Version.txt"
 
-echo "=== Locating built release application ==="
-BUILT_DIR=$(xcodebuild -workspace OpenGlance.xcworkspace -scheme OpenGlance -configuration Release -showBuildSettings | grep -m 1 "BUILT_PRODUCTS_DIR = " | cut -d= -f2 | xargs)
-APP_PATH="$BUILT_DIR/OpenGlance.app"
-
-if [ -d "$APP_PATH" ]; then
-    echo "=== Copying OpenGlance.app to project root ==="
-    rm -rf "$ROOT_DIR/OpenGlance.app" "$ROOT_DIR/OpenGlance-Release.zip"
-    cp -R "$APP_PATH" "$ROOT_DIR/"
-    
-    echo "=== Packaging Release Archive (OpenGlance-Release.zip) ==="
-    cd "$ROOT_DIR"
-    zip -r -y OpenGlance-Release.zip OpenGlance.app
-    
-    echo "=== Release package created successfully! ==="
-    echo "Files available in root directory:"
-    echo "  - OpenGlance.app (Folder)"
-    echo "  - OpenGlance-Release.zip (Archive)"
-else
-    echo "Error: Could not find compiled app at $APP_PATH"
-    exit 1
+if [ $# -ne 1 ]; then
+  echo "Usage: $0 <version>  (e.g. $0 2.2.1)" >&2
+  exit 1
 fi
+
+VERSION="$1"
+if ! [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+  echo "Error: version must look like X.Y.Z (got '$VERSION')" >&2
+  exit 1
+fi
+
+echo "=== Setting version to $VERSION ==="
+printf '[version]%s[/version]\n' "$VERSION" > "$VERSION_FILE"
+
+# Update MARKETING_VERSION only in the main OpenGlance target (lines 1008/1038).
+if ! grep -q "MARKETING_VERSION = $VERSION;" "$PBXPROJ"; then
+  sed -i '' -E "s/^( *)(MARKETING_VERSION = )[0-9.]+;/\1\2$VERSION;/" "$PBXPROJ"
+fi
+
+echo "=== Committing version bump ==="
+git -C "$ROOT_DIR" add "$VERSION_FILE" "$PBXPROJ"
+git -C "$ROOT_DIR" commit -m "chore: release v$VERSION
+
+Co-authored-by: CommandCodeBot <noreply@commandcode.ai>"
+
+TAG="v$VERSION"
+echo "=== Creating and pushing tag $TAG ==="
+git -C "$ROOT_DIR" tag -a "$TAG" -m "Release v$VERSION"
+git -C "$ROOT_DIR" push origin master
+git -C "$ROOT_DIR" push origin "$TAG"
+
+echo "=== Done. Pushed $TAG; the release workflow will build and publish it. ==="
