@@ -810,8 +810,15 @@
 /* Begin XCBuildConfiguration section */
 		B42F614D24ACEED6006C80C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 48FFD35BD7BF5BFC156A284B /* Pods-OpenGlance.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PODS_CONFIGURATION_BUILD_DIR)/CocoaLumberjack",
+					"$(PODS_ROOT)/Sparkle",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -833,8 +840,15 @@
 		};
 		B42F614E24ACEED6006C80C7 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 38CA14F4AF2DC4D3F10B5439 /* Pods-OpenGlance.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PODS_CONFIGURATION_BUILD_DIR)/CocoaLumberjack",
+					"$(PODS_ROOT)/Sparkle",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;

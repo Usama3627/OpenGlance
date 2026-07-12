@@ -53,7 +53,11 @@ jobs:
       working-directory: ./iGlance/iGlance
       run: carthage update --platform macOS
 
+    # install swiftlint (not distributed as a CocoaPod in this project)
+    - name: install swiftlint
+      run: brew install swiftlint
+
     # Runs the linting command
     - name: run linting command
       working-directory: ./iGlance/iGlance
-      run: ../Pods/Swiftlint/swiftlint
+      run: swiftlint
