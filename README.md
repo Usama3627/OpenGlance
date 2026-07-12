@@ -2,6 +2,8 @@
 
 OpenGlance is an actively maintained fork of [iGlance](https://github.com/iglance/iGlance), a macOS system monitor for the menu bar. It keeps iGlance's GPLv3 license and contributor attribution while continuing development with a modernized interface and expanded dashboard.
 
+Homepage: [openglance.github.io](https://openglance.github.io)
+
 ## What's new in v2.2
 
 - Native Apple Silicon compatibility.
@@ -26,6 +28,16 @@ More monitoring, dashboard, and menu-bar features are planned.
 
 - macOS 10.13 or later
 - Apple Silicon and Intel Macs are supported
+
+## Install
+
+Download the latest macOS build from [GitHub Releases](https://github.com/Usama3627/OpenGlance/releases/latest), unzip it, and move **OpenGlance.app** to your Applications folder.
+
+> Releases are currently unsigned, so macOS may ask you to confirm that you want to open the app.
+
+## Publishing a release
+
+Set the same version in `Version.txt` and the Xcode `MARKETING_VERSION`, then push a matching tag (for example, `v2.2.0`). GitHub Actions builds the universal app and attaches its ZIP and SHA-256 checksum to the GitHub Release.
 
 ## Build and run
 

@@ -35,7 +35,7 @@
 	<key>SUEnableAutomaticChecks</key>
 	<true/>
 	<key>SUFeedURL</key>
-	<string>https://raw.githubusercontent.com/iglance/OpenGlance/master/Sparkle/updates/appcast.xml</string>
+	<string>https://raw.githubusercontent.com/Usama3627/OpenGlance/master/Sparkle/updates/appcast.xml</string>
 	<key>SUPublicEDKey</key>
 	<string>P3ARK4FDc8pGDsEcPHzAOcdQTLRecgY8FGAFaaXGWbs=</string>
 	<key>SUScheduledCheckInterval</key>
