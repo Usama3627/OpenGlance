@@ -74,29 +74,11 @@ jobs:
           archive="OpenGlance-v${version}-macos-universal.zip"
           test -f "$archive"
 
-          # Sparkle's generate_appcast reads the EdDSA private key from the
-          # Keychain (service "https://sparkle-project.org", account "ed25519").
-          # A temp keychain with an EMPTY password causes generate_appcast to
-          # block on an authorization prompt in headless CI, so use a real
-          # password, unlock it, and register the key under both known service
-          # names. The private key (SPARKLE_EDDSA_PRIVATE_KEY repo secret) must
+          # Pass the secret through standard input instead of the Keychain.
+          # This is Sparkle's supported non-interactive mode and avoids CI
+          # blocking on a Keychain authorization prompt. The private key must
           # match SUPublicEDKey in Info.plist.
-          KEYCHAIN_PASSWORD="$(openssl rand -base64 24)"
-          KEYCHAIN="$RUNNER_TEMP/sparkle.keychain-db"
-          security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN"
-          security set-keychain-settings -u -t 3600 "$KEYCHAIN"
-          security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN"
-          security add-generic-password \
-            -a "ed25519" \
-            -s "https://sparkle-project.org" \
-            -w "$SPARKLE_EDDSA_PRIVATE_KEY" \
-            "$KEYCHAIN"
-          security add-generic-password \
-            -a "$SPARKLE_EDDSA_PRIVATE_KEY" \
-            -s "org.sparkle-project.Sparkle" \
-            -w "$SPARKLE_EDDSA_PRIVATE_KEY" \
-            "$KEYCHAIN"
-          security list-keychains -d user -s "$KEYCHAIN"
+          test -n "$SPARKLE_EDDSA_PRIVATE_KEY"
 
           # generate_appcast reads all *.zip archives from a directory and
           # writes appcast.xml + deltas back into it. Use the CocoaPods build
@@ -105,8 +87,10 @@ jobs:
           mkdir -p Sparkle/updates
           cp "$archive" Sparkle/updates/
 
-          iGlance/Pods/Sparkle/bin/generate_appcast \
-            Sparkle/updates
+          printf '%s\n' "$SPARKLE_EDDSA_PRIVATE_KEY" | \
+            iGlance/Pods/Sparkle/bin/generate_appcast \
+              --ed-key-file - \
+              Sparkle/updates
 
           # Commit the regenerated appcast + deltas so SUFeedURL serves them.
           git config user.email "noreply@commandcode.ai"
