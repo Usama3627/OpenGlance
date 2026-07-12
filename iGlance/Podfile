@@ -1,40 +1,41 @@
 # Uncomment the next line to define a global platform for your project
-platform :osx, '10.12'
+platform :osx, '10.13'
 
-workspace "iGlance"
+workspace "OpenGlance"
 
 use_frameworks!
 
-pod "SwiftLint"
 pod "CocoaLumberjack/Swift"
 
-target 'iGlance' do
-  workspace "iGlance"
-  project "iGlance/iGlance.xcodeproj"
+target 'OpenGlance' do
+  workspace "OpenGlance"
+  project "iGlance/OpenGlance.xcodeproj"
   
-  # Pods for iGlance
-  pod "Sparkle"
+  # Pods for OpenGlance
+  # Sparkle 2.x ships an arm64-capable xcframework, required for Apple Silicon
+  # native builds. Sparkle 1.x only provided x86_64/i386 slices.
+  pod "Sparkle", "~> 2.0"
 end
 
 target "SMCKit" do
-  workspace "iGlance"
+  workspace "OpenGlance"
   project "Libraries/SMCKit/SMCKit.xcodeproj"
 end
 
 target "SystemKit" do
-  workspace "iGlance"
+  workspace "OpenGlance"
   project "Libraries/SystemKit/SystemKit.xcodeproj"
 end
 
 target "AppMover" do
-  workspace "iGlance"
+  workspace "OpenGlance"
   project "Libraries/AppMover/AppMover.xcodeproj"
 end
 
 post_install do |installer|
      installer.pods_project.targets.each do |target|
          target.build_configurations.each do |config|
-             config.build_settings['MACOSX_DEPLOYMENT_TARGET'] = '10.9'
+             config.build_settings['MACOSX_DEPLOYMENT_TARGET'] = '10.13'
          end
      end
   end

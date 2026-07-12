@@ -6,3 +6,15 @@ iGlance/Pods/
 
 Sparkle/updates/*.zip
 iGlance/iGlance/Carthage/Build/
+
+# Local build and release artifacts
+iGlance/build/
+iGlance/Libraries/build/
+iGlance/Libraries/*/build/
+iGlance/*.app/
+iGlance/*.zip
+*.dmg
+
+# Dependency checkout working copies and local agent artifacts
+iGlance/iGlance/Carthage/Checkouts/
+.pi-subagents/

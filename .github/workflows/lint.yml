@@ -51,7 +51,7 @@ jobs:
     # update carthage
     - name: execute 'carthage update'
       working-directory: ./iGlance/iGlance
-      run: carthage update
+      run: carthage update --platform macOS
 
     # Runs the linting command
     - name: run linting command

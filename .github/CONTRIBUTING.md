@@ -23,7 +23,7 @@ After cloning your forked repository you have to install the dependencies of the
 If you get an error during building the carthage libraries [this](https://stackoverflow.com/questions/40743713/command-line-tool-error-xcrun-error-unable-to-find-utility-xcodebuild-n) might help you.
 
 ## Setting up Xcode
-To get started using Xcode you need to open the workspace file `<root>/iGlance/iGlance.xcworkspace`. To test if everything is setup correctly you can select the `iGlance` scheme at the upper left corner and run the app by clicking `Product > Run`. The app should be built now and start running. 
+To get started using Xcode you need to open the workspace file `<root>/iGlance/OpenGlance.xcworkspace`. To test if everything is setup correctly you can select the `OpenGlance` scheme at the upper left corner and run the app by clicking `Product > Run`. The app should be built now and start running. 
 To setup Xcode correctly with CocoaPods you should see a warning saying `"Update to recommended settings"`. By clicking on the warning and letting Xcode automatically update the project settings should fix the warning. 
 
 Now you are ready to start developing!🎉

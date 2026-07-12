@@ -42,8 +42,8 @@ jobs:
     # update carthage
     - name: execute 'carthage update'
       working-directory: ./iGlance/iGlance
-      run: carthage update
+      run: carthage update --platform macOS
 
     - name: build project
       working-directory: ./iGlance
-      run: xcodebuild -workspace iGlance.xcworkspace -scheme iGlance -config Release CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+      run: xcodebuild -workspace OpenGlance.xcworkspace -scheme OpenGlance -config Release ARCHS="arm64 x86_64" ONLY_ACTIVE_ARCH=NO CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
