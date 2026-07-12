@@ -98,7 +98,9 @@ jobs:
           git add Sparkle/updates
           if ! git diff --cached --quiet; then
             git commit -m "chore: update appcast for v${version}"
-            git push origin master
+            # Tag-triggered Actions checkouts are detached, so push the
+            # current commit explicitly to the default branch.
+            git push origin HEAD:master
           fi
 
       - name: Create GitHub Release
