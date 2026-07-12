@@ -5,7 +5,7 @@
 	<key>SMCKit</key>
 	<dict>
 		<key>URL</key>
-		<string>https://github.com/iglance/SMCKit</string>
+		<string>https://github.com/beltex/SMCKit</string>
 		<key>License</key>
 		<string>The MIT License (MIT)
 
@@ -707,7 +707,7 @@ the library.  If this is what you want to do, use the GNU Lesser General
 Public License instead of this License.  But first, please read
 &lt;https://www.gnu.org/licenses/why-not-lgpl.html&gt;.</string>
 		<key>URL</key>
-		<string>https://github.com/iglance/OpenGlance</string>
+		<string>https://github.com/Usama3627/OpenGlance</string>
 	</dict>
 	<key>AppMover</key>
 	<dict>
@@ -788,3 +788,4 @@ THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRES
 	</dict>
 </dict>
 </plist>
+t>

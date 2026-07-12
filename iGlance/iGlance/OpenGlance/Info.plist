@@ -37,7 +37,7 @@
 	<key>SUFeedURL</key>
 	<string>https://raw.githubusercontent.com/Usama3627/OpenGlance/master/Sparkle/updates/appcast.xml</string>
 	<key>SUPublicEDKey</key>
-	<string>P3ARK4FDc8pGDsEcPHzAOcdQTLRecgY8FGAFaaXGWbs=</string>
+	<string>KLesFrhQ3a7+rzRzP/6999OtgYHZbbzKGBPaRYwuZ4k=</string>
 	<key>SUScheduledCheckInterval</key>
 	<integer>7200</integer>
 </dict>

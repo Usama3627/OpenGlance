@@ -30,18 +30,24 @@ More monitoring, dashboard, and menu-bar features are planned.
 
 ## Requirements
 
-- macOS 10.13 or later
+- macOS 12 (Monterey) or later
 - Apple Silicon and Intel Macs are supported
 
 ## Install
 
 Download the latest macOS build from [GitHub Releases](https://github.com/Usama3627/OpenGlance/releases/latest), unzip it, and move **OpenGlance.app** to your Applications folder.
 
-> Releases are currently unsigned, so macOS may ask you to confirm that you want to open the app.
+> Releases are currently unsigned, so macOS may ask you to confirm that you want to open the app. The app updates itself automatically via [Sparkle](https://sparkle-project.org) once installed.
 
 ## Publishing a release
 
-Set the same version in `Version.txt` and the Xcode `MARKETING_VERSION`, then push a matching tag (for example, `v2.2.0`). GitHub Actions builds the universal app and attaches its ZIP and SHA-256 checksum to the GitHub Release.
+Run the helper from the repository root:
+
+```sh
+./release.sh <version>   # e.g. ./release.sh 2.2.1
+```
+
+This bumps `Version.txt` and the Xcode `MARKETING_VERSION`, commits, tags `vX.Y.Z`, and pushes. The pushed tag triggers the release workflow, which builds the universal app, publishes a GitHub Release with the ZIP and its SHA-256 checksum, and regenerates the Sparkle appcast automatically. A `SPARKLE_EDDSA_PRIVATE_KEY` repository secret (the EdDSA private key matching `SUPublicEDKey`) is required for appcast signing.
 
 ## Build and run
 

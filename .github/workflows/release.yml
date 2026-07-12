@@ -33,10 +33,6 @@ jobs:
         working-directory: iGlance
         run: pod install
 
-      - name: Build Carthage dependencies
-        working-directory: iGlance/iGlance
-        run: carthage update --platform macOS
-
       - name: Build universal release
         working-directory: iGlance
         run: |
@@ -65,6 +61,48 @@ jobs:
           ditto -c -k --sequesterRsrc --keepParent "$app" "$archive"
           shasum -a 256 "$archive" > "${archive}.sha256"
           echo "archive=${archive}" >> "$GITHUB_OUTPUT"
+
+      - name: Generate Sparkle appcast
+        id: appcast
+        shell: bash
+        env:
+          SPARKLE_EDDSA_PRIVATE_KEY: ${{ secrets.SPARKLE_EDDSA_PRIVATE_KEY }}
+        run: |
+          set -euo pipefail
+          version="${{ steps.version.outputs.version }}"
+          archive="OpenGlance-v${version}-macos-universal.zip"
+          test -f "$archive"
+
+          # Sparkle's generate_appcast reads the EdDSA private key from the
+          # login Keychain, looked up by service "https://sparkle-project.org"
+          # and account "ed25519". CI has no Keychain, so we import the secret
+          # into a throwaway keychain with those exact attributes. The private
+          # key (SPARKLE_EDDSA_PRIVATE_KEY repo secret) must match SUPublicEDKey
+          # in Info.plist.
+          KEYCHAIN="$RUNNER_TEMP/sparkle.keychain-db"
+          security create-keychain -p "" "$KEYCHAIN"
+          security set-keychain-settings "$KEYCHAIN"
+          security unlock-keychain -p "" "$KEYCHAIN"
+          security add-generic-password \
+            -a "ed25519" \
+            -s "https://sparkle-project.org" \
+            -w "$SPARKLE_EDDSA_PRIVATE_KEY" \
+            "$KEYCHAIN"
+          security list-keychains -d user -s "$KEYCHAIN"
+
+          ./Sparkle/generate_appcast \
+            --link "https://github.com/Usama3627/OpenGlance/releases/tag/${{ github.ref_name }}" \
+            -o Sparkle/updates \
+            "$archive"
+
+          # Commit the regenerated appcast + deltas so SUFeedURL serves them.
+          git config user.email "noreply@commandcode.ai"
+          git config user.name "OpenGlance Bot"
+          git add Sparkle/updates
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: update appcast for v${version}"
+            git push origin master
+          fi
 
       - name: Create GitHub Release
         env:

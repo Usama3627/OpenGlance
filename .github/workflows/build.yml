@@ -38,11 +38,6 @@ jobs:
       run: pod install
       env:
         CP_HOME_DIR: ./cocoaPodsHomeDir
-        
-    # update carthage
-    - name: execute 'carthage update'
-      working-directory: ./iGlance/iGlance
-      run: carthage update --platform macOS
 
     - name: build project
       working-directory: ./iGlance

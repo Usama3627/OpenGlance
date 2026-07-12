@@ -27,7 +27,7 @@ extension Bundle {
      * Returns the localized name of the application
      */
     var localizedName: String {
-        NSRunningApplication.current.localizedName ?? "iGlance"
+        NSRunningApplication.current.localizedName ?? "OpenGlance"
     }
 
     /**

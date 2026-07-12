@@ -14,13 +14,13 @@ git clone --recurse-submodules git@github.com:Usama3627/OpenGlance.git
 
 ## Installing the dependencies
 
-After cloning your forked repository you have to install the dependencies of the project using [CocoaPods](https://cocoapods.org) and [Carthage](https://github.com/Carthage/Carthage). To install the dependencies using both dependency managers you can execute the following command (including the parentheses) in the root directory (in the following called `<root>`) of the cloned repository:
+After cloning your forked repository you have to install the dependencies of the project using [CocoaPods](https://cocoapods.org). The app uses CocoaPods for Sparkle and CocoaLumberjack, and Swift Package Manager (integrated in Xcode) for LaunchAtLogin. To install the CocoaPods dependencies execute the following command in the `iGlance` directory (in the following called `<root>/iGlance`) of the cloned repository:
 
 ```
-(cd ./iGlance && pod install && cd ./iGlance && carthage update)
+pod install
 ```
 
-If you get an error during building the carthage libraries [this](https://stackoverflow.com/questions/40743713/command-line-tool-error-xcrun-error-unable-to-find-utility-xcodebuild-n) might help you.
+If you get build errors after updating dependencies, run `pod install` again and let Xcode update the project settings when prompted.
 
 ## Setting up Xcode
 To get started using Xcode you need to open the workspace file `<root>/iGlance/OpenGlance.xcworkspace`. To test if everything is setup correctly you can select the `OpenGlance` scheme at the upper left corner and run the app by clicking `Product > Run`. The app should be built now and start running.
@@ -46,7 +46,7 @@ Releases are produced automatically from a version tag. To cut a release, run th
 ./release.sh <version>   # e.g. ./release.sh 2.2.1
 ```
 
-This bumps `Version.txt` and the Xcode `MARKETING_VERSION`, commits, tags `vX.Y.Z`, and pushes. The pushed tag triggers the release workflow, which builds the universal macOS app and publishes a GitHub Release with the ZIP and its SHA-256 checksum.
+This bumps `Version.txt` and the Xcode `MARKETING_VERSION`, commits, tags `vX.Y.Z`, and pushes. The pushed tag triggers the release workflow, which builds the universal macOS app, publishes a GitHub Release with the ZIP and its SHA-256 checksum, and regenerates the Sparkle appcast (requires a `SPARKLE_EDDSA_PRIVATE_KEY` repository secret).
 
 ## Merging your code
 

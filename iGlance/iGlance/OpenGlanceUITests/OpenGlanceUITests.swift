@@ -29,40 +29,40 @@ class OpenGlanceUITests: XCTestCase {
 
         openMainWindow(app: app)
 
-        let iglanceWindow = app.windows["OpenGlance"]
+        let openGlanceWindow = app.windows["OpenGlance"]
 
-        var mainView = iglanceWindow.otherElements["DashboardMainView"].waitForExistence(timeout: 5)
+        var mainView = openGlanceWindow.otherElements["DashboardMainView"].waitForExistence(timeout: 5)
         XCTAssert(mainView)
 
-        iglanceWindow.otherElements["CpuSidebarButton"].click()
-        mainView = iglanceWindow.otherElements["CpuMainView"].waitForExistence(timeout: 5)
+        openGlanceWindow.otherElements["CpuSidebarButton"].click()
+        mainView = openGlanceWindow.otherElements["CpuMainView"].waitForExistence(timeout: 5)
         XCTAssert(mainView)
 
-        iglanceWindow.otherElements["MemorySidebarButton"].click()
-        mainView = iglanceWindow.otherElements["MemoryMainView"].waitForExistence(timeout: 5)
+        openGlanceWindow.otherElements["MemorySidebarButton"].click()
+        mainView = openGlanceWindow.otherElements["MemoryMainView"].waitForExistence(timeout: 5)
         XCTAssert(mainView)
 
-        iglanceWindow.otherElements["NetworkSidebarButton"].click()
-        mainView = iglanceWindow.otherElements["NetworkMainView"].waitForExistence(timeout: 5)
+        openGlanceWindow.otherElements["NetworkSidebarButton"].click()
+        mainView = openGlanceWindow.otherElements["NetworkMainView"].waitForExistence(timeout: 5)
         XCTAssert(mainView)
 
-        iglanceWindow.otherElements["FanSidebarButton"].click()
-        mainView = iglanceWindow.otherElements["FanMainView"].waitForExistence(timeout: 5)
+        openGlanceWindow.otherElements["FanSidebarButton"].click()
+        mainView = openGlanceWindow.otherElements["FanMainView"].waitForExistence(timeout: 5)
         XCTAssert(mainView)
 
-        iglanceWindow.otherElements["BatterySidebarButton"].click()
-        mainView = iglanceWindow.otherElements["BatteryMainView"].waitForExistence(timeout: 5)
+        openGlanceWindow.otherElements["BatterySidebarButton"].click()
+        mainView = openGlanceWindow.otherElements["BatteryMainView"].waitForExistence(timeout: 5)
         XCTAssert(mainView)
 
-        iglanceWindow.otherElements["DiskSidebarButton"].click()
-        mainView = iglanceWindow.otherElements["DiskMainView"].waitForExistence(timeout: 5)
+        openGlanceWindow.otherElements["DiskSidebarButton"].click()
+        mainView = openGlanceWindow.otherElements["DiskMainView"].waitForExistence(timeout: 5)
         XCTAssert(mainView)
 
-        iglanceWindow.otherElements["SettingsSidebarButton"].click()
-        mainView = iglanceWindow.otherElements["SettingsMainView"].waitForExistence(timeout: 5)
+        openGlanceWindow.otherElements["SettingsSidebarButton"].click()
+        mainView = openGlanceWindow.otherElements["SettingsMainView"].waitForExistence(timeout: 5)
         XCTAssert(mainView)
 
-        iglanceWindow.buttons[XCUIIdentifierCloseWindow].click()
+        openGlanceWindow.buttons[XCUIIdentifierCloseWindow].click()
     }
 
     // MARK: Private Functions
