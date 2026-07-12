@@ -21,12 +21,12 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - name: checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       with:
         submodules: "recursive"
         
     - name: get pods home directory from cache
-      uses: actions/cache@v1
+      uses: actions/cache@v4
       with:
         path: ./iGlance/cocoaPodsHomeDir
         key: ${{ runner.os }}--pods-homeDir-key-${{ hashFiles('**/Podfile.lock') }}
@@ -34,7 +34,7 @@ jobs:
           ${{ runner.os }}--pods-homeDir-key-
         
     - name: get installed pods from cache
-      uses: actions/cache@v1
+      uses: actions/cache@v4
       with:
         path: ./iGlance/Pods
         key: ${{ runner.os }}--pods-key-${{ hashFiles('**/Podfile.lock') }}
