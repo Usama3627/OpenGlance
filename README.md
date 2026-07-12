@@ -2,7 +2,7 @@
 
 OpenGlance is an actively maintained fork of [iGlance](https://github.com/iglance/iGlance), a macOS system monitor for the menu bar. It keeps iGlance's GPLv3 license and contributor attribution while continuing development with a modernized interface and expanded dashboard.
 
-Homepage: [openglance.github.io](https://openglance.github.io)
+Homepage: [Usama3627.github.io/OpenGlance](https://usama3627.github.io/OpenGlance)
 
 ## What's new in v2.2
 
