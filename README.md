@@ -4,6 +4,10 @@ OpenGlance is an actively maintained fork of [iGlance](https://github.com/iglanc
 
 Homepage: [Usama3627.github.io/OpenGlance](https://usama3627.github.io/OpenGlance)
 
+<img src="assets/logo.png" alt="OpenGlance logo" width="96" height="96" />
+
+<img src="assets/iGlance_Preview.png" alt="OpenGlance preview" />
+
 ## What's new in v2.2
 
 - Native Apple Silicon compatibility.
