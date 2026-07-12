@@ -74,11 +74,10 @@ jobs:
           test -f "$archive"
 
           # Sparkle's generate_appcast reads the EdDSA private key from the
-          # login Keychain, looked up by service "https://sparkle-project.org"
-          # and account "ed25519". CI has no Keychain, so we import the secret
-          # into a throwaway keychain with those exact attributes. The private
-          # key (SPARKLE_EDDSA_PRIVATE_KEY repo secret) must match SUPublicEDKey
-          # in Info.plist.
+          # login Keychain. Different Sparkle builds query different service
+          # names, so register the key under both known forms to be safe.
+          # The private key (SPARKLE_EDDSA_PRIVATE_KEY repo secret) must match
+          # SUPublicEDKey in Info.plist.
           KEYCHAIN="$RUNNER_TEMP/sparkle.keychain-db"
           security create-keychain -p "" "$KEYCHAIN"
           security set-keychain-settings "$KEYCHAIN"
@@ -88,12 +87,20 @@ jobs:
             -s "https://sparkle-project.org" \
             -w "$SPARKLE_EDDSA_PRIVATE_KEY" \
             "$KEYCHAIN"
+          security add-generic-password \
+            -a "$SPARKLE_EDDSA_PRIVATE_KEY" \
+            -s "org.sparkle-project.Sparkle" \
+            -w "$SPARKLE_EDDSA_PRIVATE_KEY" \
+            "$KEYCHAIN"
           security list-keychains -d user -s "$KEYCHAIN"
 
+          # generate_appcast reads all *.zip archives from a directory and
+          # writes appcast.xml + deltas back into it.
+          mkdir -p Sparkle/updates
+          cp "$archive" Sparkle/updates/
+
           ./Sparkle/generate_appcast \
-            --link "https://github.com/Usama3627/OpenGlance/releases/tag/${{ github.ref_name }}" \
-            -o Sparkle/updates \
-            "$archive"
+            Sparkle/updates
 
           # Commit the regenerated appcast + deltas so SUFeedURL serves them.
           git config user.email "noreply@commandcode.ai"
