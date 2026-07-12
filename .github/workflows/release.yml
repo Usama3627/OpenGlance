@@ -93,8 +93,8 @@ jobs:
               Sparkle/updates
 
           # Commit the regenerated appcast + deltas so SUFeedURL serves them.
-          git config user.email "noreply@commandcode.ai"
-          git config user.name "OpenGlance Bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
           git add Sparkle/updates
           if ! git diff --cached --quiet; then
             git commit -m "chore: update appcast for v${version}"

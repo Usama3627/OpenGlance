@@ -1,0 +1,14 @@
+<?xml version="1.0" standalone="yes"?>
+<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+    <channel>
+        <title>OpenGlance</title>
+        <item>
+            <title>2.2.0</title>
+            <pubDate>Sun, 12 Jul 2026 20:16:00 +0000</pubDate>
+            <sparkle:version>2.2</sparkle:version>
+            <sparkle:shortVersionString>2.2.0</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>12.0</sparkle:minimumSystemVersion>
+            <enclosure url="https://raw.githubusercontent.com/Usama3627/OpenGlance/master/Sparkle/updates/OpenGlance-v2.2.2-macos-universal.zip" length="6993011" type="application/octet-stream" sparkle:edSignature="EZNSJfGrh53NWEF9O6dFv+msfTBJxVd9LWOpgNi5Y5riv1wifPnRYUKfvWnH9MiOVvuIbsBxFg7tXFlrIeskCg=="/>
+        </item>
+    </channel>
+</rss>
